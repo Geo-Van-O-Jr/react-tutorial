@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment, useState, useEffect} from "react";
 import GreyImg from "../../shared/grey-img";
 import DescriptionWithLink from "../../shared/grey-img/DescriptionWithLink";
 
@@ -10,8 +10,15 @@ async function getSatellites(id) {
 
 
 
-class Planet extends React.Component {
-    constructor(props) {
+const Planet = (props) => {
+    const [satellites, setSatellites] = useState([]);
+
+    useEffect(() => {
+        getSatellites(props.id).then(data => {
+            setSatellites(data['satellites'])
+        }, [])
+    })
+    /*constructor(props) {
         super(props)
         this.state = {
             satellites: []
@@ -25,23 +32,23 @@ class Planet extends React.Component {
             }))
         })
     }
-
-    render() {
+    
+    render() {*/
         let title;
-        if (this.props.title_with_underline)
-            title = <h4><u>{this.props.name}</u></h4>
+        if (props.title_with_underline)
+            title = <h4><u>{props.name}</u></h4>
         else
-            title = <h4>{this.props.name}</h4>
+            title = <h4>{props.name}</h4>
 
 
         return (
             <div>
                 {title}
-                <DescriptionWithLink description={this.props.description} link={this.props.link} link_description={this.props.link_description} />
-                <GreyImg img_url={this.props.img_url} gray={this.props.gray} />
+                <DescriptionWithLink description={props.description} link={props.link} link_description={props.link_description} />
+                <GreyImg img_url={props.img_url} gray={props.gray} />
                 <h4>Satélites</h4>
                 <ul>
-                    {this.state.satellites.map((satellite, index) =>
+                    {satellites.map((satellite, index) =>
                         <li key={index}>{satellite.name}</li>
                     )}
                 </ul>
@@ -51,6 +58,6 @@ class Planet extends React.Component {
             </div>
         )
     }
-}
+
 
 export default Planet
