@@ -74,16 +74,14 @@ class Planets extends React.Component {
             <Fragment>
                 <h3>List of Stars</h3>
                 <button onClick={this.removeLast}>Remove Last</button>
-                {this.state.planets.map((planet) =>
+                {this.state.planets.map((planet, index) =>
                     <Planet
+                        id={planet.id}
                         name={planet.name}
-                        title_with_underline={planet.title_with_underline}
                         link_description={planet.link_description}
                         description={planet.description}
                         img_url={planet.img_url}
-                        clickOnPlanet={planet.clickOnPlanet}
-                        link={planet.link}
-                        catch_phrase={planet.catch_phrase}
+                        key={index}
                     />
                 )}
                 <button onClick={this.duplicateLast}>Duplicate Last</button>
